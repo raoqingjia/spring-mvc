@@ -7,11 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>addUsers page</h1>
+<h1>deleteUsers page</h1>
 <p>id : ${id}</p>
 <p>userName : ${userName}</p>
-<script>
- console.log("id:"+${id});
-</script>
 </body>
 </html>
