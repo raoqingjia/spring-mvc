@@ -9,13 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.entity.saveUsersParam;
 
 @Controller
 @RequestMapping(value="/pages")
+
 public class PagesController {
+	
+	@RequestMapping(value= {"/login"},method= {RequestMethod.GET})
+	public String Login() {
+		
+		return "login";
+	}
+	
 	// 利用ModelAndView返回页面    
 	// @RequestMapping 中的value method都可以设置多个
 	@RequestMapping(value= {"/index","/indexPage"},method= {RequestMethod.GET,RequestMethod.POST})

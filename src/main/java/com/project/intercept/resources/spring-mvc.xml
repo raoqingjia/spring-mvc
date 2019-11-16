@@ -38,6 +38,14 @@
 		<!-- 视图资源url的后缀 -->
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+	<!-- 配置请求拦截器 -->
+	<mvc:interceptors>
+	   <mvc:interceptor>
+	      <!--**表示对所有的请求借口路径都进行拦截 -->
+          <mvc:mapping path="/**"></mvc:mapping>
+          <bean class="com.project.intercept.PageIntercept"></bean>	   
+	   </mvc:interceptor>
+	</mvc:interceptors>
 </beans>
 
 
