@@ -13,8 +13,9 @@ public class PageIntercept implements HandlerInterceptor {
 	//  请求来临还未到达controller器
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println(request);
+		System.out.println("session="+request.getSession());
 		System.out.println("请求到达preHandle");
+		request.getSession();
 		return true;
 	}
    //  请求未到达controller器return完成执行，但是页面还没渲染

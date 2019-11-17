@@ -1,14 +1,19 @@
 package com.project.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,14 +26,17 @@ public class PagesController {
 	
 	@RequestMapping(value= {"/login"},method= {RequestMethod.GET})
 	public String Login() {
-		
+		System.out.println("到达 - login page");
 		return "login";
 	}
 	
 	// 利用ModelAndView返回页面    
 	// @RequestMapping 中的value method都可以设置多个
 	@RequestMapping(value= {"/index","/indexPage"},method= {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView indexPage() {
+	public ModelAndView indexPage(String id) throws Exception {
+		if(id==null) {
+			throw new RuntimeException("RuntimeException - index页面请求id不可为空！");
+		}
 		ModelAndView model = new ModelAndView();
 		model.setViewName("index");
 		model.addObject("msg", "hello index");
@@ -80,6 +88,18 @@ public class PagesController {
 		model.addAttribute("msg", param);
 		System.out.println("param:"+param);
 		return "findUsers";   // 次字符串会交给视图解析器进行解析
+	}
+	
+	//  handlerExcpetion是我定义的内部异常类
+	// 当请求出现异常，spring会现在当前累中寻找是否有@ExceptionHandler的存在，如果存在则进行异常处理
+	// value= Exception.class 表示当前异常的类型
+	// 返回的是个请求不是个页面加上@ResponseBody
+	@ExceptionHandler(value= Exception.class)
+	@ResponseBody
+	public Map<String, Object> handlerExcpetion(Exception e) {
+	    Map<String,Object> map=new HashMap();
+	    map.put("error", e.getMessage());
+		return map;
 	}
 	
 }
